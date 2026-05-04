@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: api-medico
+    ports:
+      - "5001:80"
+    depends_on:
+      - sql
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sql;Database=ApiMedico;User Id=sa;Password=MyP@ss123!;
+    restart: always
+
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "MyP@ss123!"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    restart: always
+
+volumes:
+  sql_data:
+# Comandos útiles:
+# Levantar los contenedores en segundo plano:
+#   docker-compose up -d
+# Apagar y eliminar contenedores (no borra los volúmenes):
+#   docker-compose down
