@@ -5,6 +5,7 @@ public class ApplicationDbContext : DbContext
     {
         
     }
+
     //Sets de la base de datos
-    //public DbSet<Category> Categories{ get; set; }  
+    public DbSet<Rol> rol { get; set; }  
 }
