@@ -80,5 +80,21 @@ namespace ApiProyecto.Controllers
             }
             return NoContent();
         }
+
+        [HttpGet("{id:int}", Name = "GetRol")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetRol(int id)
+        {
+            var rol = _rolRepository.GetRolById(id);
+            if (rol == null)
+            {
+                return NotFound();
+            }
+            var rolDto = _mapper.Map<RolDto>(rol);
+            return Ok(rolDto);
+        }
     }
 }
