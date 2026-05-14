@@ -94,5 +94,50 @@ namespace MyApp.Namespace
             }
             return Ok(permisosDto);
         }
+        [HttpDelete("{id:int}", Name = "DeletePermiso")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult DeletePermiso(int id)
+        {
+            if( _permisoRepository.GetPermisoById(id) == null)
+            {
+                return NotFound($"El permiso con id '{id}' no existe.");
+            }
+            var response = _permisoRepository.DeletePermisoById(id);
+            if (!response)
+            {
+                ModelState.AddModelError("CustomError", $"Algo salió mal al intentar eliminar el permiso con id '{id}'.");
+                return StatusCode(500, ModelState);
+            }
+            return NoContent();
+        }
+        [HttpPatch("{id:int}", Name = "UpdatePermiso")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult UpdatePermiso(int id, [FromBody] PermisoDto updatePermiso)
+        {
+            if (_permisoRepository.GetPermisoById(id) == null)
+            {
+                return NotFound($"El permiso con id '{id}' no existe.");
+            }
+            if (updatePermiso == null )
+            {
+                return BadRequest(ModelState);
+            }
+
+            var permiso = _mapper.Map<Permiso>(updatePermiso);
+            if (!_permisoRepository.UpdatePermiso(permiso))
+            {
+                ModelState.AddModelError("CustomError", $"Algo salió mal al intentar actualizar el permiso con id '{id}'.");
+                return StatusCode(500, ModelState);
+            }
+            return NoContent();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ApiProyecto.Repository.IRepository;
 using ApiProyecto.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiProyecto.Repository;
 
@@ -17,11 +18,11 @@ public class PermisoRepository : IPermisoRepository
     }
     public Permiso? GetPermisoById(int id)
     {
-        return _db.permiso.FirstOrDefault(p => p.Id_Permiso == id);
+        return _db.permiso.AsNoTracking().FirstOrDefault(p => p.Id_Permiso == id);
     }
     public Permiso? GetPermisoByName(string nombre)
     {
-        return _db.permiso.FirstOrDefault(p => p.Descripcion.ToLower() == nombre.ToLower());
+        return _db.permiso.AsNoTracking().FirstOrDefault(p => p.Descripcion.ToLower() == nombre.ToLower());
     }
     public bool CreatePermiso(Permiso permiso)
     {
