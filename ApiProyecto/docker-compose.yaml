@@ -13,7 +13,9 @@ services:
     restart: always
 
   sql:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    build:
+      context: .
+      dockerfile: Dockerfile.sqlserver
     platform: linux/amd64
     container_name: sql
     environment:
