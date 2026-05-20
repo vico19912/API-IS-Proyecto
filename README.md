@@ -132,6 +132,81 @@ https://localhost:5001/swagger
 
 ---
 
+# Levantar con Docker (desde cero)
+
+Este proyecto incluye una imagen de SQL Server personalizada que crea automáticamente la base de datos `ApiMedico` y todas sus tablas al iniciar.
+
+## Requisitos previos
+
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado y en ejecución
+
+## Pasos
+
+### 1. Clonar el repositorio
+
+```bash
+git clone <URL_DEL_REPOSITORIO>
+```
+
+### 2. Entrar a la carpeta del proyecto
+
+```bash
+cd ApiProyecto
+```
+
+### 3. Levantar los contenedores
+
+```bash
+docker compose up --build
+```
+
+Docker construirá dos imágenes:
+
+| Contenedor  | Descripción                                         |
+| ----------- | --------------------------------------------------- |
+| `sql`       | SQL Server 2022 con la BD `ApiMedico` inicializada  |
+| `api-medico`| API REST en .NET 8 conectada al contenedor `sql`    |
+
+La API estará disponible en:
+
+```
+http://localhost:5001
+```
+
+Swagger:
+
+```
+http://localhost:5001/swagger
+```
+
+---
+
+## Reiniciar desde cero (borrar datos)
+
+Si necesitas destruir los contenedores **y el volumen** de la base de datos para volver al estado inicial:
+
+```bash
+docker compose down -v
+docker compose up --build
+```
+
+> **Advertencia:** `down -v` elimina todos los datos almacenados en el volumen `sql_data`. Úsalo solo cuando quieras un entorno completamente limpio.
+
+---
+
+## Comandos útiles
+
+| Comando                        | Descripción                                      |
+| ------------------------------ | ------------------------------------------------ |
+| `docker compose up --build`    | Construir y levantar todos los contenedores      |
+| `docker compose up -d --build` | Levantar en segundo plano (modo detached)        |
+| `docker compose down`          | Detener y eliminar contenedores (conserva datos) |
+| `docker compose down -v`       | Detener, eliminar contenedores **y volúmenes**   |
+| `docker compose logs -f`       | Ver logs en tiempo real                          |
+| `docker compose logs -f sql`   | Ver logs solo del contenedor SQL Server          |
+
+---
+
 # Estado del Proyecto
 
 Proyecto en desarrollo.
@@ -142,7 +217,6 @@ Próximas mejoras:
 * Roles y permisos avanzados
 * Validaciones con FluentValidation
 * Logging
-* Docker
 * Unit Testing
 * CI/CD
 * Versionado de API
