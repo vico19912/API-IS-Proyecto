@@ -50,4 +50,16 @@ BEGIN
         CONSTRAINT Permiso_UNIQUE_Descripcion UNIQUE (Descripcion)
     );
 END
+
+GO
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Paciente' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE ApiMedico.dbo.Paciente (
+        Id_Paciente int IDENTITY(1,1) NOT NULL,
+        Persona_Id int NOT NULL,
+        Fecha_Creacion datetime DEFAULT getdate() NULL,
+        Fecha_Modificacion datetime DEFAULT getdate() NULL,
+        CONSTRAINT Paciente_PK PRIMARY KEY (Id_Paciente)
+    );
+END
 GO

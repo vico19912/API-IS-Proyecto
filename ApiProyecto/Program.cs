@@ -16,7 +16,7 @@ builder.Configuration
 var dbConnectionString =
     builder.Configuration.GetConnectionString("ConexionSql")
     ?? Environment.GetEnvironmentVariable("ConnectionStrings__ConexionSql");
-    
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         dbConnectionString,
@@ -30,6 +30,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //Agregando el mapeo de los Dto's
 builder.Services.AddScoped<IRolRepository, RolRepository>();
 builder.Services.AddScoped<IPermisoRepository, PermisoRepository>();
+builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 
 //Instancia de AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -43,8 +44,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 //}
 
 app.UseHttpsRedirection();
