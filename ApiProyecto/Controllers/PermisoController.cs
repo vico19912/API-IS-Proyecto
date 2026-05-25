@@ -6,7 +6,7 @@ using ApiProyecto.Repository.IRepository;
 using ApiProyecto.Models.Dto;
 using ApiProyecto.Models;
 
-namespace MyApp.Namespace
+namespace ApiProyecto.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,9 +45,9 @@ namespace MyApp.Namespace
                 return BadRequest(ModelState);
             }
 
-            if(_permisoRepository.GetPermisoByName(createPermiso.Descripcion) != null)
+            if (_permisoRepository.GetPermisoByName(createPermiso.Descripcion) != null)
             {
-                ModelState.AddModelError("CustomError",$"El permiso con el nombre '{createPermiso.Descripcion}' ya existe.");
+                ModelState.AddModelError("CustomError", $"El permiso con el nombre '{createPermiso.Descripcion}' ya existe.");
                 return BadRequest(ModelState);
             }
 
@@ -93,6 +93,51 @@ namespace MyApp.Namespace
                 permisosDto.Add(_mapper.Map<PermisoDto>(permiso));
             }
             return Ok(permisosDto);
+        }
+        [HttpDelete("{id:int}", Name = "DeletePermiso")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult DeletePermiso(int id)
+        {
+            if (_permisoRepository.GetPermisoById(id) == null)
+            {
+                return NotFound($"El permiso con id '{id}' no existe.");
+            }
+            var response = _permisoRepository.DeletePermisoById(id);
+            if (!response)
+            {
+                ModelState.AddModelError("CustomError", $"Algo salió mal al intentar eliminar el permiso con id '{id}'.");
+                return StatusCode(500, ModelState);
+            }
+            return NoContent();
+        }
+        [HttpPatch("{id:int}", Name = "UpdatePermiso")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult UpdatePermiso(int id, [FromBody] PermisoDto updatePermiso)
+        {
+            if (_permisoRepository.GetPermisoById(id) == null)
+            {
+                return NotFound($"El permiso con id '{id}' no existe.");
+            }
+            if (updatePermiso == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var permiso = _mapper.Map<Permiso>(updatePermiso);
+            if (!_permisoRepository.UpdatePermiso(permiso))
+            {
+                ModelState.AddModelError("CustomError", $"Algo salió mal al intentar actualizar el permiso con id '{id}'.");
+                return StatusCode(500, ModelState);
+            }
+            return NoContent();
         }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using ApiProyecto.Repository.IRepository;
+using ApiProyecto.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ApiProyecto.Repository;
 
@@ -18,11 +21,11 @@ public class RolRepository : IRolRepository
 
     public Rol? GetRolById(int id)
     {
-        return _db.rol.FirstOrDefault(r => r.Id_Rol == id);
+        return _db.rol.AsNoTracking().FirstOrDefault(r => r.Id_Rol == id);
     }
     public Rol? GetRolByName(string nombre)
     {
-        return _db.rol.FirstOrDefault(r => r.Descripcion.ToLower() == nombre.ToLower());
+        return _db.rol.AsNoTracking().FirstOrDefault(r => r.Descripcion.ToLower() == nombre.ToLower());
     }
     public bool CreateRol(Rol rol)
     {

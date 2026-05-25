@@ -96,5 +96,30 @@ namespace ApiProyecto.Controllers
             var rolDto = _mapper.Map<RolDto>(rol);
             return Ok(rolDto);
         }
+        [HttpPatch("{id:int}", Name = "UpdateRol")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult UpdateRol(int id, [FromBody] RolDto updateRol)
+        {
+            if (_rolRepository.GetRolById(id) == null)
+            {
+                return NotFound($"El rol con id '{id}' no existe.");
+            }
+            if (updateRol == null || id != updateRol.Id_Rol)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var rol = _mapper.Map<Rol>(updateRol);
+            if (!_rolRepository.UpdateRol(rol))
+            {
+                ModelState.AddModelError("CustomError", $"Algo salió mal al intentar actualizar el rol con id '{id}'.");
+                return StatusCode(500, ModelState);
+            }
+            return NoContent();
+        }
     }
 }
