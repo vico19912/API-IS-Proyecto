@@ -26,7 +26,7 @@ public class HospitalRepository : IHospitalRepository
     public Hospital? GetHospitalByName(string name)
     {
         return _db.hospital
-              .FirstOrDefault(h => h.Nombre == name);
+              .FirstOrDefault(h => h.Nombre.ToLower() == name.ToLower());
     }
     public bool CreateHospital(Hospital hospital)
     {

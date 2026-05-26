@@ -79,7 +79,7 @@ namespace ApiProyecto.Controllers
             }
             return CreatedAtRoute("GetHospitalById", new { id = hospital.Id_Hospital }, hospital);
         }
-        [HttpPatch("{id:int}", Name = "UpdateHospital")]
+        [HttpPut("{id:int}", Name = "UpdateHospital")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
