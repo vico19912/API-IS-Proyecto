@@ -18,7 +18,7 @@ public class PacienteRepository : IPacienteRepository
 
         _db.persona.Add(paciente.Persona);
         _db.SaveChanges();
-        
+
         paciente.Persona_Id = paciente.Persona.Id_Persona;
         paciente.Fecha_Creacion = DateTime.UtcNow;
         paciente.Fecha_Modificacion = DateTime.UtcNow;
