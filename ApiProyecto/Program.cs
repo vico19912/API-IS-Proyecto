@@ -33,6 +33,7 @@ builder.Services.AddScoped<IPermisoRepository, PermisoRepository>();
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 builder.Services.AddScoped<IHospitalRepository, HospitalRepository>();
 builder.Services.AddScoped<IEspecialidadRepository, EspecialidadRepository>();
+builder.Services.AddScoped<ITipoEmpleadoRepository, TipoEmpleadoRepository>();
 
 //Instancia de AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
