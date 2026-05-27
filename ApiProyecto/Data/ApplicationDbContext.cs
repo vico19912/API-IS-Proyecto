@@ -12,4 +12,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Permiso> permiso { get; set; }
     public DbSet<Paciente> paciente { get; set; }
     public DbSet<Persona> persona { get; set; }
+    public DbSet<Doctor> doctor { get; set; }
+    public DbSet<Empleado> empleado { get; set; }
+    public DbSet<Especialidad> especialidad { get; set; }
+    public DbSet<Hospital> hospital { get; set; }
+    public DbSet<TipoEmpleado> tipoempleado { get; set; }
+
 }
