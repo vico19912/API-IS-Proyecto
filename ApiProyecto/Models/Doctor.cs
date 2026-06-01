@@ -8,6 +8,7 @@ namespace ApiProyecto.Models;
 public class Doctor
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id_Doctor { get; set; }
     public string Numero_Colegiatura { get; set; }
     public int Empleado_Id { get; set; }
@@ -17,4 +18,6 @@ public class Doctor
     public Persona Persona { get; set; }
     [ForeignKey("Empleado_Id")]
     public Empleado Empleado { get; set; }
+    [ForeignKey("Especialidad_Id")]
+    public Especialidad Especialidad { get; set; }
 }
