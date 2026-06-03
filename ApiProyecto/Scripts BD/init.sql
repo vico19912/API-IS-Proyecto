@@ -159,7 +159,7 @@ BEGIN
         Id_Tipo int IDENTITY(1,1) NOT NULL,
         Descripcion varchar(100) NOT NULL,
         Fecha_Creacion datetime DEFAULT getdate() NULL,
-        Fecha_Modificacion datetime NULL,
+        Fecha_Modificacion datetime DEFAULT getdate() NULL,
         CONSTRAINT Tipo_Empleado_UNIQUE UNIQUE (Id_Tipo),
         CONSTRAINT Tipo_Empleado_UNIQUE_1 UNIQUE (Descripcion)
     );
