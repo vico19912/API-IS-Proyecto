@@ -9,4 +9,5 @@ public interface IDoctorRepository
     public bool CreateDoctor(Doctor doctor);
     public bool UpdateDoctor(Doctor doctor);
     public bool DeleteDoctor(int id);
+    public Doctor? GetDoctorByName(string name);
 }
