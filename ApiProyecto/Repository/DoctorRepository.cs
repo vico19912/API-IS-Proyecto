@@ -33,6 +33,15 @@ public class DoctorRepository : IDoctorRepository
               .Include(d => d.Especialidad)
               .FirstOrDefault(d => d.Id_Doctor == id);
     }
+    public Doctor? GetDoctorByName(string name)
+    {
+        return _db.doctor
+              .Include(d => d.Persona)
+              .Include(d => d.Empleado)
+              .Include(d => d.Especialidad)
+              .Include(d => d.Empleado.Hospital)
+              .FirstOrDefault(d => d.Persona.Nombre.ToLower() == name.ToLower());
+    }
     public bool CreateDoctor(Doctor doctor)
     {
         _db.persona.Add(doctor.Persona);

@@ -44,6 +44,18 @@ namespace MyApp.Namespace
             var doctorDto = _mapper.Map<DoctorDto>(doctor);
             return Ok(doctorDto);
         }
+        [HttpGet("name/{name}", Name = "GetDoctorByName")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetDoctorByName(string name)
+        {
+            var doctor = _doctorRepository.GetDoctorByName(name);
+            if (doctor == null) return NotFound($"No se encontró registro para doctor con nombre: {name}.");
+            var doctorDto = _mapper.Map<DoctorDto>(doctor);
+            return Ok(doctorDto);
+        }
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
