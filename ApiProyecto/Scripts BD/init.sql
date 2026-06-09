@@ -166,3 +166,21 @@ BEGIN
 
 END
 GO
+
+IF NOT EXISTS (SELECT *
+FROM sys.tables
+WHERE name = 'Cita' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE ApiMedico.dbo.Cita
+    (
+        Id_Cita int IDENTITY(1,1) NOT NULL,
+        Paciente_Id int NOT NULL,
+        Doctor_Id int NOT NULL,
+        Fecha_Cita datetime NOT NULL,
+        Fecha_Modificacion datetime DEFAULT getdate() NOT NULL,
+        CONSTRAINT Cita_PK PRIMARY KEY (Id_Cita)
+    );
+
+
+END
+GO

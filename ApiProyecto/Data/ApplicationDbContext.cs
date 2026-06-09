@@ -17,4 +17,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Especialidad> especialidad { get; set; }
     public DbSet<Hospital> hospital { get; set; }
     public DbSet<TipoEmpleado> tipoempleado { get; set; }
+    public DbSet<Cita> cita { get; set; }
 }
