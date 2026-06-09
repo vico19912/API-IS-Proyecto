@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
-namespace MyApp.Namespace
+namespace ApiProyecto.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
