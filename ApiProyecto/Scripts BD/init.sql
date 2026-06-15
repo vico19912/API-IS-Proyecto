@@ -184,3 +184,21 @@ BEGIN
 
 END
 GO
+
+IF NOT EXISTS (SELECT *
+FROM sys.tables
+WHERE name = 'Diagnostico' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE ApiMedico.dbo.Diagnostico
+    (
+        Id_Diagnostico int IDENTITY(1,1) NOT NULL,
+        Descripcion varchar(300) NOT NULL,
+        Comentario varchar(300) NOT NULL,
+        Cita_Id int NOT NULL,
+        Fecha_Creacion datetime NOT NULL,
+        Fecha_Modificacion datetime NOT NULL,
+        CONSTRAINT Diagnostico_PK PRIMARY KEY (Id_Diagnostico)
+    );
+
+END
+GO
