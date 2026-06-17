@@ -4,6 +4,7 @@ namespace ApiProyecto.Repository.IRepository;
 
 public interface IDiagnosticoRepository
 {
+    public ICollection<Diagnostico> GetAllDiagnosticos();
     public ICollection<Diagnostico> GetAllDiagnosticoByDNI(string dni);
     public Diagnostico GetDiagnosticoById(int id);
     public bool CreateDiagnostico(Diagnostico diagnostico);

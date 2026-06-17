@@ -20,6 +20,15 @@ namespace ApiProyecto.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetAllDiagnosticos()
+        {
+            var lst = _diagnosticoRepository.GetAllDiagnosticos();
+            var lstDto = lst.Select(d => _mapper.Map<DiagnosticoDto>(d)).ToList();
+            return Ok(lstDto);
+        }
+
         [HttpGet("{dni}")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]

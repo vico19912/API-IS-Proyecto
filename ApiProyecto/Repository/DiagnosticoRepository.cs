@@ -11,6 +11,22 @@ public class DiagnosticoRepository : IDiagnosticoRepository
     {
         _db = db;
     }
+    public ICollection<Diagnostico> GetAllDiagnosticos()
+    {
+        return _db.diagnostico
+            .Include(d => d.Cita)
+                .ThenInclude(c => c.Paciente)
+                    .ThenInclude(p => p.Persona)
+            .Include(d => d.Cita)
+                .ThenInclude(c => c.Doctor)
+                    .ThenInclude(doc => doc.Persona)
+            .Include(d => d.Cita)
+                .ThenInclude(c => c.Doctor)
+                    .ThenInclude(doc => doc.Especialidad)
+            .OrderByDescending(d => d.Fecha_Creacion)
+            .AsNoTracking()
+            .ToList();
+    }
     public ICollection<Diagnostico> GetAllDiagnosticoByDNI(string dni)
     {
         return _db.diagnostico

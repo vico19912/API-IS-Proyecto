@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ApiProyecto.Repository;
 using ApiProyecto.Repository.IRepository;
+using ApiProyecto.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,5 +64,26 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Cargar datos de prueba con reintentos (SQL Server tarda en estar listo en Docker)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var intentos = 10;
+    while (intentos-- > 0)
+    {
+        try
+        {
+            DataSeeder.Seed(db);
+            Console.WriteLine("[Seeder] Datos cargados correctamente.");
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Seeder] No disponible, reintentando en 3s... ({ex.Message})");
+            Thread.Sleep(3000);
+        }
+    }
+}
 
 app.Run();

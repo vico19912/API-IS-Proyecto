@@ -13,5 +13,5 @@ public class Paciente
     public DateTime Fecha_Modificacion { get; set; }
 
     [ForeignKey("Persona_Id")]
-    public Persona Persona { get; set; }
+    public Persona Persona { get; set; } = null!;
 }
