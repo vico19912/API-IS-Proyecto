@@ -40,16 +40,19 @@ public class CitaRepository : ICitaRepository
                 .Include(c => c.Doctor.Empleado.Hospital)
                 .FirstOrDefault(c => c.Id_Cita == id);
     }
-    public Cita? GetCitaByPacienteId(int pacienteId)
+    public ICollection<Cita> GetCitasByPacienteId(int pacienteId)
     {
         return _db.cita
                 .Include(c => c.Paciente)
-                .Include(c => c.Paciente.Persona)
+                    .ThenInclude(p => p!.Persona)
                 .Include(c => c.Doctor)
-                .Include(c => c.Doctor.Persona)
-                .Include(c => c.Doctor.Especialidad)
-                .Include(c => c.Doctor.Empleado.Hospital)
-                .FirstOrDefault(c => c.Paciente_Id == pacienteId);
+                    .ThenInclude(d => d!.Persona)
+                .Include(c => c.Doctor)
+                    .ThenInclude(d => d!.Especialidad)
+                .Where(c => c.Paciente_Id == pacienteId)
+                .OrderByDescending(c => c.Fecha_Cita)
+                .AsNoTracking()
+                .ToList();
     }
     public ICollection<Cita> GetCitasByDoctorId(int doctorId)
     {

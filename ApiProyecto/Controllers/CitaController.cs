@@ -45,17 +45,16 @@ namespace ApiProyecto.Controllers
             var citaDto = _mapper.Map<CitaDto>(cita);
             return Ok(citaDto);
         }
-        [HttpGet("paciente/{pacienteId}", Name = "GetCitaByPacienteId")]
+        [HttpGet("paciente/{pacienteId}", Name = "GetCitasByPacienteId")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult GetCitaByPacienteId(int pacienteId)
+        public IActionResult GetCitasByPacienteId(int pacienteId)
         {
-            var cita = _citaRepository.GetCitaByPacienteId(pacienteId);
-            if (cita == null) return NotFound($"No se encontro cita para el paciente con ID {pacienteId}.");
-            var citaDto = _mapper.Map<CitaDto>(cita);
-            return Ok(citaDto);
+            var citas = _citaRepository.GetCitasByPacienteId(pacienteId);
+            var citasDto = citas.Select(c => _mapper.Map<CitaDto>(c)).ToList();
+            return Ok(citasDto);
         }
         [HttpGet("doctor/{doctorId}", Name = "GetCitasByDoctorId")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

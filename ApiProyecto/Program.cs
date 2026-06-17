@@ -38,6 +38,9 @@ builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<ICitaRepository, CitaRepository>();
 builder.Services.AddScoped<IDiagnosticoRepository, DiagnosticoRepository>();
+builder.Services.AddScoped<ITipoMedicamentoRepository, TipoMedicamentoRepository>();
+builder.Services.AddScoped<IMedicamentoRepository, MedicamentoRepository>();
+builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
 
 //Instancia de AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
