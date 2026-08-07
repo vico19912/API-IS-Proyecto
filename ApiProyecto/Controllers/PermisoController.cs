@@ -6,7 +6,7 @@ using ApiProyecto.Repository.IRepository;
 using ApiProyecto.Models.Dto;
 using ApiProyecto.Models;
 
-namespace MyApp.Namespace
+namespace ApiProyecto.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,9 +45,9 @@ namespace MyApp.Namespace
                 return BadRequest(ModelState);
             }
 
-            if(_permisoRepository.GetPermisoByName(createPermiso.Descripcion) != null)
+            if (_permisoRepository.GetPermisoByName(createPermiso.Descripcion) != null)
             {
-                ModelState.AddModelError("CustomError",$"El permiso con el nombre '{createPermiso.Descripcion}' ya existe.");
+                ModelState.AddModelError("CustomError", $"El permiso con el nombre '{createPermiso.Descripcion}' ya existe.");
                 return BadRequest(ModelState);
             }
 
@@ -102,7 +102,7 @@ namespace MyApp.Namespace
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeletePermiso(int id)
         {
-            if( _permisoRepository.GetPermisoById(id) == null)
+            if (_permisoRepository.GetPermisoById(id) == null)
             {
                 return NotFound($"El permiso con id '{id}' no existe.");
             }
@@ -126,7 +126,7 @@ namespace MyApp.Namespace
             {
                 return NotFound($"El permiso con id '{id}' no existe.");
             }
-            if (updatePermiso == null )
+            if (updatePermiso == null)
             {
                 return BadRequest(ModelState);
             }
